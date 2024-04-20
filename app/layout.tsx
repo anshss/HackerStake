@@ -5,6 +5,7 @@ import {
   EthersExtension,
   DynamicContextProvider,
   EthereumWalletConnectors,
+  // ZeroDevSmartWalletConnectors
 } from "../lib/dynamic";
 
 const inter = Inter({ subsets: ["latin"] });
