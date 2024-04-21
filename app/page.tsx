@@ -13,7 +13,7 @@ import {
 import axios from "axios";
 
 export default function Home() {
-    const [isBorrowClicked, setIsBorrowClicked] = useState(true);
+    const [isBorrowClicked, setIsBorrowClicked] = useState(false);
     const [walletAddress, setWalletAddress] = useState(false);
     const [creditScore, setCreditScore] = useState("");
     const [githubAccContributions, setGithubAccContributions] = useState(0);
@@ -84,7 +84,7 @@ export default function Home() {
                         <span className="text-green-500">funds</span>, happy
                         hacking!
                     </h1>
-                    <div>
+                    <div className="min-h-[14vh]">
                         {walletAddress ? (
                             <div className="flex flex-col gap-3 mb-8">
                                 <DynamicWidget />
@@ -200,7 +200,7 @@ export default function Home() {
                         <span className="text-green-500">funds</span>, happy
                         hacking!
                     </h1>
-                    <div>
+                    <div className="min-h-[14vh]">
                         {walletAddress ? (
                             <div className="flex flex-col gap-3 mb-8">
                                 <DynamicWidget />
