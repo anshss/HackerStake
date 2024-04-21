@@ -11,3 +11,7 @@ export async function generateBorrowLimit(creditScore, githubAccContributions) {
 }
 
 export async function fetchBorrowedAmount(user) {}
+
+export async function borrowLoan(borrowAmount) {}
+
+export async function repayLoan(repayAmount) {}

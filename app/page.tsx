@@ -7,6 +7,8 @@ import {
     createAttestation,
     generateBorrowLimit,
     fetchBorrowedAmount,
+    repayLoan,
+    borrowLoan,
 } from "../utils";
 import axios from "axios";
 
@@ -19,11 +21,12 @@ export default function Home() {
     const { user, isAuthenticated, primaryWallet } = useDynamicContext();
 
     useEffect(() => {
-        console.log("hehe", primaryWallet);
-    }, [primaryWallet])
+        // console.log("hehe", primaryWallet);
+    }, [primaryWallet]);
 
     useEffect(() => {
         let x: any = user?.verifiedCredentials[0].address;
+        // console.log("user", user);
         setWalletAddress(x);
     }, [user]);
 
@@ -181,19 +184,13 @@ export default function Home() {
             setIsLoadingDetails(false);
         }
 
-        const borrowLoan = async () => {
-            if (!primaryWallet) return null;
-            else {
-              console.log("address", primaryWallet.address);
-            }
-        
-            const signer = await primaryWallet.connector.getSigner();
-        
-            return signer ? await signer.signMessage("example") : null;
-          };
+        async function borrowLoanCall() {
+            await borrowLoan(formInput.borrowAmount);
+        }
 
-
-        async function repayLoan() {}
+        async function repayLoanCall() {
+            await repayLoan(formInput.repayAmount);
+        }
 
         return (
             <div className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -244,7 +241,7 @@ export default function Home() {
                         <button
                             className="w-[6rem] bg-green-500 text-black rounded-md px-4 py-2 border border-transparent hover:border-white"
                             // onClick={() => borrowLoan(primaryWallet)}
-                            onClick={borrowLoan}
+                            onClick={borrowLoanCall}
                         >
                             Borrow
                         </button>
@@ -263,7 +260,7 @@ export default function Home() {
 
                         <button
                             className="w-[6rem] bg-green-500 text-black rounded-md px-4 py-2 border border-transparent hover:border-white"
-                            onClick={repayLoan}
+                            onClick={repayLoanCall}
                         >
                             Repay
                         </button>
