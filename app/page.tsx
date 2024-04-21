@@ -39,7 +39,8 @@ export default function Home() {
         });
 
         useEffect(() => {
-            let x: any = user?.verifiedCredentials[2].oauthUsername;
+            let x: any = user?.verifiedCredentials[1].oauthUsername;
+            console.log("user", user);
             setGithubUsername(x);
         }, [isAuthenticated, user]);
 
