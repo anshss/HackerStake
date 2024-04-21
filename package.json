@@ -12,6 +12,7 @@
     "@dynamic-labs/ethereum": "*",
     "@dynamic-labs/ethers-v6": "*",
     "@dynamic-labs/sdk-react-core": "*",
+    "@ethsign/sp-sdk": "^0.3.29",
     "@types/node": "20.5.4",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",

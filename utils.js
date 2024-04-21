@@ -1,5 +1,5 @@
 
-// const signProtocol = require('sign-protocol-sdk');
+import signProtocol from '@ethsign/sp-sdk';
 
 
 export async function fetchCreditScore(user) {
@@ -7,28 +7,39 @@ export async function fetchCreditScore(user) {
 }
 
 export async function createAttestation(creditScore, walletAddress) {
-    
-        try {
-          const attestation = await signProtocol.createAttestation({
-            schemaName: "CreditScore",
-            data: {
-              creditScore: creditScore,
-              walletAddress: walletAddress
-            },
-            subject: walletAddress,
-            metadata: {
-              issuer: "user",
-              createdAt: new Date()
-            }
-          });
-          console.log('Attestation created successfully:', attestation);
-          return attestation;
-        } catch (error) {
-          console.error('Error creating attestation:', error);
-          throw error;
-    }
-   }
+    const res = await client.createAttestation({
+        schemaId: "0x34",
+        data: {
+          creditScore,
+          walletAddress
+        },
+      });
+}
+// const url = `https://testnet-rpc.sign.global/api/${endpoint}`;
+//     const res = await axios.request({
+//       url,
+//       headers: {
+//         "Content-Type": "application/json; charset=UTF-8"
+//       },
+//       ...options
+//     });
+//     // throw API errors
+//     if (res.status !== 200) {
+//       throw new Error(JSON.stringify(res));
+//     }
+//     // return original response
+//     return res.data;
 
+// export async function makeAttestation(creditScore, walletAddress) {
+//     const res = await client.makeAttestation({
+//         schemaId: "0x34",
+//         data: {
+//           contractDetails,
+//           signer
+//         },
+//         indexingValue: signer.toLowerCase()
+//       });
+// }
 
 export async function generateBorrowLimit(creditScore, githubAccContributions) {
     async function getCreditScore() {
@@ -61,7 +72,7 @@ export async function generateBorrowLimit(creditScore, githubAccContributions) {
         borrowLimit = 30;
     }
 
-    return borrowLimit * (githubContributionsResult );
+    return borrowLimit; 
 }
 
 
