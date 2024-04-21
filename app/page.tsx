@@ -36,7 +36,7 @@ export default function Home() {
 
         useEffect(() => {
             let x: any = user?.verifiedCredentials[2].oauthUsername;
-            console.log("user", user);
+            // console.log("user", user);
             setGithubUsername(x);
         }, [isAuthenticated, user]);
 
@@ -65,7 +65,7 @@ export default function Home() {
             setIsScoreLoading(true);
             const data: any = await fetchCreditScore(formInput.panCard);
             setCreditScore(data);
-            await createAttestation(creditScore, walletAddress);
+            await createAttestation(creditScore);
             setIsScoreLoading(false);
         }
 
@@ -96,7 +96,7 @@ export default function Home() {
                     </div>
                     {isAuthenticated && user ? (
                         <div className="flex flex-col gap-4">
-                            {creditScore === "" ? (
+                            {creditScore == "" ? (
                                 <div className="flex flex-row gap-3 mb-6 items-center">
                                     <input
                                         className="text-gray-500 placeholder-gray-500 bg-gray-100 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"

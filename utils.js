@@ -1,9 +1,14 @@
-import signProtocol from "@ethsign/sp-sdk";
+import {
+    SignProtocolClient,
+    SpMode,
+    EvmChains,
+} from "@ethsign/sp-sdk";
+import { privateKeyToAccount } from "viem/accounts";
 import web3modal from "web3modal";
 import { ethers } from "ethers";
 import { contractAddress, contractAbi } from "./config";
 
-let attestationId = 12;
+let attestationId;
 
 export async function getSmartContract(providerOrSigner) {
     const modal = new web3modal();
@@ -26,44 +31,27 @@ export async function getSmartContract(providerOrSigner) {
     return contract;
 }
 
-export async function fetchCreditScore(user) {
-    return 808;
-}
+export async function createAttestation(_creditScore, _walletAddress) {
 
-export async function createAttestation(creditScore, walletAddress) {
+    console.log("attestation called");
+
+    const privateKey = NEXT_PUBLIC_PRIVATE_KEY;
+    const client = new SignProtocolClient(SpMode.OnChain, {
+        chain: EvmChains.gnosisChiado,
+        account: privateKeyToAccount(privateKey),
+    });
+
     const res = await client.createAttestation({
-        schemaId: "0x34",
+        schemaId: "0x11",
         data: {
-          creditScore,
-          walletAddress
+            name: _creditScore,
+            walletAddress: _walletAddress
         },
-      });
-}
-// const url = `https://testnet-rpc.sign.global/api/${endpoint}`;
-//     const res = await axios.request({
-//       url,
-//       headers: {
-//         "Content-Type": "application/json; charset=UTF-8"
-//       },
-//       ...options
-//     });
-//     // throw API errors
-//     if (res.status !== 200) {
-//       throw new Error(JSON.stringify(res));
-//     }
-//     // return original response
-//     return res.data;
+    });
 
-// export async function makeAttestation(creditScore, walletAddress) {
-//     const res = await client.makeAttestation({
-//         schemaId: "0x34",
-//         data: {
-//           contractDetails,
-//           signer
-//         },
-//         indexingValue: signer.toLowerCase()
-//       });
-// }
+    attestationId = res.attestationId;
+    console.log(res, "res");
+}
 
 export async function generateBorrowLimit(creditScore, githubAccContributions) {
     async function getCreditScore() {
@@ -95,7 +83,11 @@ export async function generateBorrowLimit(creditScore, githubAccContributions) {
         borrowLimit = 30;
     }
 
-    return borrowLimit + Math.floor(githubContributionsResult / 1000 * 10);; 
+    return borrowLimit + Math.floor((githubContributionsResult / 1000) * 10);
+}
+
+export async function fetchCreditScore(user) {
+    return 821;
 }
 
 export async function getUserAddress() {
