@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@dynamic-labs/ethereum": "*",
-    "@dynamic-labs/ethers-v6": "*",
+    "@dynamic-labs/ethers-v5": "^1.4.9",
     "@dynamic-labs/sdk-react-core": "*",
     "@ethsign/sp-sdk": "^0.3.29",
     "@types/node": "20.5.4",
@@ -20,12 +20,14 @@
     "axios": "^1.6.8",
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.19",
+    "ethers": "^5.7.2",
     "next": "13.4.19",
     "postcss": "8.4.28",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "tailwindcss": "3.3.3",
-    "typescript": "5.2.2"
+    "typescript": "5.2.2",
+    "web3modal": "^1.9.12"
   },
   "devDependencies": {
     "hardhat": "^2.22.3"
