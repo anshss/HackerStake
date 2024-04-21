@@ -14,15 +14,11 @@ import axios from "axios";
 
 export default function Home() {
     const [isBorrowClicked, setIsBorrowClicked] = useState(false);
-    const [walletAddress, setWalletAddress] = useState(false);
+    const [walletAddress, setWalletAddress] = useState("");
     const [creditScore, setCreditScore] = useState("");
     const [githubAccContributions, setGithubAccContributions] = useState(0);
 
     const { user, isAuthenticated, primaryWallet } = useDynamicContext();
-
-    useEffect(() => {
-        // console.log("hehe", primaryWallet);
-    }, [primaryWallet]);
 
     useEffect(() => {
         let x: any = user?.verifiedCredentials[0].address;
@@ -98,7 +94,7 @@ export default function Home() {
                             </div>
                         )}
                     </div>
-                    {isAuthenticated ? (
+                    {isAuthenticated && user ? (
                         <div className="flex flex-col gap-4">
                             {creditScore === "" ? (
                                 <div className="flex flex-row gap-3 mb-6 items-center">
@@ -171,7 +167,7 @@ export default function Home() {
 
         useEffect(() => {
             fetchDetails();
-        }, []);
+        }, [isBorrowClicked]);
 
         async function fetchDetails() {
             setIsLoadingDetails(true);
@@ -179,8 +175,8 @@ export default function Home() {
                 creditScore,
                 githubAccContributions
             );
-            const borrowA: any = await fetchBorrowedAmount(user);
             setBorrowLimit(borrowL);
+            const borrowA: any = await fetchBorrowedAmount(user);
             setBorrowedAmount(borrowA);
             setIsLoadingDetails(false);
         }
@@ -202,7 +198,7 @@ export default function Home() {
                         hacking!
                     </h1>
                     <div className="min-h-[14vh]">
-                        {walletAddress ? (
+                        {walletAddress == "" ? (
                             <div className="flex flex-col gap-3 mb-8">
                                 <DynamicWidget />
                                 <p>Address: {walletAddress}</p>
@@ -216,14 +212,15 @@ export default function Home() {
                     </div>
                     <div className="flex flex-col gap-4 mb-8">
                         {isLoadingDetails ? (
-                            <p>Loading..</p>
+                            <div>
+                                <p>Borrow Limit: Loading..</p>
+                                <p>Borrow Amount: Loading..</p>
+                            </div>
                         ) : (
-                            <p>Borrow Limit: {borrowLimit} USDT</p>
-                        )}
-                        {isLoadingDetails ? (
-                            <p>Loading..</p>
-                        ) : (
-                            <p>Borrowed Amount: {borrowedAmount} USDT</p>
+                            <div>
+                                <p>Borrow Limit: {borrowLimit} USDT</p>
+                                <p>Borrow Amount: {borrowedAmount} USDT</p>
+                            </div>
                         )}
                     </div>
 
@@ -241,7 +238,6 @@ export default function Home() {
 
                         <button
                             className="w-[6rem] bg-green-500 text-black rounded-md px-4 py-2 border border-transparent hover:border-white"
-                            // onClick={() => borrowLoan(primaryWallet)}
                             onClick={borrowLoanCall}
                         >
                             Borrow
